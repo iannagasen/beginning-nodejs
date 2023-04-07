@@ -1,4 +1,6 @@
-### Steps
+## Initial Setup and Introduction
+
+---
 
 #### **Step 0:** Run this command to ignore all node_modules
 
@@ -88,3 +90,71 @@ app.listen(PORT, () =>
 Output:
 
 ![run_express_js](/docs/snaps/run_express_01.png)
+
+#### **Step 11.** Install nodemon dependency with this command
+
+- `npm install --save-dev nodemon`
+- by specfying _`--save-dev`_ option tells npm to save the package as a development dependency in the `package.json` file of your project, which means that nodemon will be listed under the `devDependencies` section of the package.json file.
+- **Usage**: make the server automatically restart when file changes
+
+#### **Step 12.** Change the script for running the app. Locate `package.json` and change
+
+- From these:
+
+```json
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1"
+}
+```
+
+- To these:
+
+```json
+"scripts": {
+  // this will start the application using nodemon
+  // if we use npm start
+  "start": "nodemon index.js"
+}
+```
+
+#### **Step 13.** Now run using:
+
+```npm
+  npm start
+```
+
+## Routing using Express
+
+---
+
+#### 1. Create the homepage `GET /` route
+
+```js
+app.get("/", (req, res) => {
+  console.log("TEST");
+
+  res.send("Hello from Homepage.");
+});
+```
+
+#### 2. Create the `GET /users` route
+
+- 2.1. Create a file /routes/users.js
+
+```js
+import express from express;
+
+const router = express.Router();
+router.get('/', (req, res) => res.send('HELLO'));
+
+export default router;
+```
+
+- then add this to index.js
+
+```js
+...
+import usersRouter from "/routes/users.js";
+app.get("/users", usersRouter);
+...
+```
